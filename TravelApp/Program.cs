@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TravelApp.Data;
+using TravelApp.Services;
 
 namespace TravelApp;
 
@@ -12,6 +13,8 @@ public class Program
         // Add services to the container.
         builder.Services.AddDbContext<TravelAppContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("TravelAppConnection")));
+
+        builder.Services.AddScoped<IClienteService, ClienteService>();
 
         builder.Services.AddRazorPages();
 
