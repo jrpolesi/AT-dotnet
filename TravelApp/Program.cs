@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using TravelApp.Data;
+
 namespace TravelApp;
 
 public class Program
@@ -7,6 +10,9 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        builder.Services.AddDbContext<TravelAppContext>(options =>
+            options.UseSqlite(builder.Configuration.GetConnectionString("TravelAppConnection")));
+
         builder.Services.AddRazorPages();
 
         var app = builder.Build();
