@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelApp", "TravelApp\TravelApp.csproj", "{47C1759F-7F29-4288-9B4F-6DC7EF8EEB31}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47C1759F-7F29-4288-9B4F-6DC7EF8EEB31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47C1759F-7F29-4288-9B4F-6DC7EF8EEB31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47C1759F-7F29-4288-9B4F-6DC7EF8EEB31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47C1759F-7F29-4288-9B4F-6DC7EF8EEB31}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
