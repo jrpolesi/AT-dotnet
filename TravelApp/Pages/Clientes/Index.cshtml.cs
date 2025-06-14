@@ -8,7 +8,7 @@ public class IndexModel : PageModel
 {
     private readonly IClienteService _clienteService;
 
-    public IEnumerable<Cliente> Clientes { get; set; } = new List<Cliente>();
+    public IEnumerable<Cliente> Clientes { get; set; } = [];
 
     public IndexModel(IClienteService clienteService)
     {

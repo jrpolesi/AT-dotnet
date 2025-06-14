@@ -1,22 +1,22 @@
 @page
-@model TravelApp.Pages.Clientes.IndexModel
+@model TravelApp.Pages.Cidades.IndexModel
 
 @{
-    ViewData["Title"] = "Lista de Clientes";
+    ViewData["Title"] = "Lista de Cidades";
 }
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>@ViewData["Title"]</h2>
-        <a asp-page="./CreateCliente" class="btn btn-primary">
-            Novo Cliente
+        <a asp-page="./CreateCidadeDestino" class="btn btn-primary">
+            Nova Cidade
         </a>
     </div>
 
-    @if (!Model.Clientes.Any())
+    @if (!Model.CidadesDestino.Any())
     {
         <div class="alert alert-info">
-            Nenhum cliente cadastrado ainda.
+            Nenhuma cidade cadastrada ainda.
         </div>
     }
     else
@@ -26,15 +26,15 @@
                 <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>Email</th>
+                    <th>País</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var cliente in Model.Clientes)
+                @foreach (var cidade in Model.CidadesDestino)
                 {
                     <tr>
-                        <td>@cliente.Nome</td>
-                        <td>@cliente.Email</td>
+                        <td>@cidade.Nome</td>
+                        <td>@cidade.PaisDestino?.Nome</td>
                     </tr>
                 }
                 </tbody>
