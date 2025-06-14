@@ -13,14 +13,16 @@ public class TravelAppContext : DbContext
 
     public DbSet<Cliente> Clientes { get; set; }
     public DbSet<Reserva> Reservas { get; set; }
-    public DbSet<Destino> Destinos { get; set; }
+    public DbSet<CidadeDestino> Cidades { get; set; }
+    public DbSet<PaisDestino> Paises { get; set; }
     public DbSet<PacoteTuristico> PacotesTuristicos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new ClienteConfiguration());
-        modelBuilder.ApplyConfiguration(new DestinoConfiguration());
-        modelBuilder.ApplyConfiguration(new PacoteTuristicoConfiguration());
         modelBuilder.ApplyConfiguration(new ReservaConfiguration());
+        modelBuilder.ApplyConfiguration(new CidadeDestinoConfiguration());
+        modelBuilder.ApplyConfiguration(new PaisDestinoConfiguration());
+        modelBuilder.ApplyConfiguration(new PacoteTuristicoConfiguration());
     }
 }

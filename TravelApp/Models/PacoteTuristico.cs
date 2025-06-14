@@ -7,5 +7,5 @@ public class PacoteTuristico
     public DateTime DataInicio { get; set; }
     public int CapacidadeMaxima { get; set; }
     public decimal Preco { get; set; }
-    public List<Destino> Destinos { get; set; } = new List<Destino>();
+    public List<CidadeDestino> Destinos { get; set; } = new List<CidadeDestino>();
 }

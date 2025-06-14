@@ -4,9 +4,9 @@ using TravelApp.Models;
 
 namespace TravelApp.Data.Configuration;
 
-public class DestinoConfiguration : IEntityTypeConfiguration<Destino>
+public class PaisDestinoConfiguration : IEntityTypeConfiguration<PaisDestino>
 {
-    public void Configure(EntityTypeBuilder<Destino> builder)
+    public void Configure(EntityTypeBuilder<PaisDestino> builder)
     {
     }
 }
