@@ -1,0 +1,65 @@
+@page
+@model TravelApp.Pages.ViewNotesModel
+@{
+    ViewData["Title"] = "Notas";
+}
+
+<div class="container mt-5">
+    <h2>@ViewData["Title"]</h2>
+
+    <form method="post">
+        <div class="mb-3">
+            <label asp-for="Input.Content" class="form-label">Salvar nota</label>
+            <textarea asp-for="Input.Content" class="form-control" rows="5"
+                      placeholder="Digite seu texto..."></textarea>
+            <span asp-validation-for="Input.Content" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+
+    @if (Model.FileNames.Any())
+    {
+        <h4 class="mt-5">Salvos</h4>
+
+        <ul class="list-group">
+            @foreach (var fileName in Model.FileNames)
+            {
+                <li class="list-group-item d-flex gap-2 justify-content-between align-items-center">
+                    <span class="flex-grow-1">@fileName</span>
+                    <a
+                        class="btn btn-sm btn-primary"
+                        href="@Url.Content($"~/files/{fileName}")"
+                        download
+                    >
+                        Baixar
+                    </a>
+                    <a
+                        class="btn btn-sm btn-primary"
+                        asp-page="./ViewNotes"
+                        asp-route-file="@fileName"
+                        asp-fragment="preview"
+                    >
+                        Ver
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+
+
+    @if (Model.SelectedFileContent != null)
+    {
+        <div id="preview" class="card mt-4">
+            <div class="card-header">
+                <strong>@Model.SelectedFileName</strong>
+            </div>
+            <div class="card-body">
+                <pre>@Model.SelectedFileContent</pre>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
