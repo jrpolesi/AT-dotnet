@@ -15,6 +15,8 @@ public class Program
             options.UseSqlite(builder.Configuration.GetConnectionString("TravelAppConnection")));
 
         builder.Services.AddScoped<IClienteService, ClienteService>();
+        builder.Services.AddScoped<ICidadeDestinoService, CidadeDestinoService>();
+        builder.Services.AddScoped<IPaisDestinoService, PaisDestinoService>();
 
         builder.Services.AddRazorPages();
 
