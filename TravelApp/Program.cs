@@ -17,6 +17,7 @@ public class Program
         builder.Services.AddScoped<IClienteService, ClienteService>();
         builder.Services.AddScoped<ICidadeDestinoService, CidadeDestinoService>();
         builder.Services.AddScoped<IPaisDestinoService, PaisDestinoService>();
+        builder.Services.AddScoped<IPacoteTuristicoService, PacoteTuristicoService>();
 
         builder.Services.AddRazorPages();
 

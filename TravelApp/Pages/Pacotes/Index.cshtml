@@ -1,0 +1,50 @@
+@page
+@model TravelApp.Pages.Pacotes.IndexModel
+
+@{
+    ViewData["Title"] = "Pacotes Turísticos";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>@ViewData["Title"]</h2>
+        <a asp-page="./CreatePacoteTuristico" class="btn btn-primary">
+            Novo Pacote
+        </a>
+    </div>
+
+    @if (!Model.Pacotes.Any())
+    {
+        <div class="alert alert-info">
+            Nenhum pacote turístico cadastrado ainda.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Data de Início</th>
+                    <th>Capacidade Máxima</th>
+                    <th>Preço</th>
+                    <th>Destinos</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var pacote in Model.Pacotes)
+                {
+                    <tr>
+                        <td>@pacote.Titulo</td>
+                        <td>@pacote.DataInicio.ToShortDateString()</td>
+                        <td>@pacote.CapacidadeMaxima</td>
+                        <td>@pacote.Preco.ToString("C")</td>
+                        <td>@string.Join(", ", pacote.Destinos?.Select(d => d.Nome) ?? [])</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

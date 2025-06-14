@@ -13,4 +13,6 @@ public class CidadeDestino
     [Required(ErrorMessage = "O país é obrigatório")]
     public int PaisDestinoId { get; set; }
     public PaisDestino? PaisDestino { get; set; }
+
+    public List<PacoteTuristico> PacotesTuristicos { get; set; } = [];
 }
