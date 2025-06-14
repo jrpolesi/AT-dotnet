@@ -30,6 +30,7 @@
                     <th>Capacidade Máxima</th>
                     <th>Preço</th>
                     <th>Destinos</th>
+                    <th>Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,9 @@
                         <td>@pacote.CapacidadeMaxima</td>
                         <td>@pacote.Preco.ToString("C")</td>
                         <td>@string.Join(", ", pacote.Destinos?.Select(d => d.Nome) ?? [])</td>
+                        <td>
+                            <a asp-page="./PacoteTuristicoDetails" asp-route-id="@pacote.Id" class="btn btn-primary btn-sm">Detalhes</a>
+                        </td>
                     </tr>
                 }
                 </tbody>

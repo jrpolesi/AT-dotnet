@@ -6,5 +6,6 @@ namespace TravelApp.Services
     {
         Task<PacoteTuristico> AddPacoteTuristicoAsync(PacoteTuristico pacote);
         Task<IEnumerable<PacoteTuristico>> GetAllPacotesTuristicoAsync();
+        Task<PacoteTuristico?> GetPacoteTuristicoByIdAsync(int id);
     }
 }

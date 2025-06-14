@@ -1,0 +1,27 @@
+@page "{id:int}"
+@model TravelApp.Pages.Pacotes.PacoteTuristicoDetailsModel
+
+@{
+    ViewData["Title"] = "Detalhes do Pacote";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+    <div class="d-flex flex-column gap-1 border p-3 rounded">
+        <h4 class="card-title">@Model.PacoteTuristico.Titulo</h4>
+        <div><strong>Data de Início:</strong> @Model.PacoteTuristico.DataInicio.ToString("dd/MM/yyyy")</div>
+        <div><strong>Capacidade Máxima:</strong> @Model.PacoteTuristico.CapacidadeMaxima</div>
+        <div><strong>Preço:</strong> @Model.PacoteTuristico.Preco.ToString("C")</div>
+        <div>
+            <strong>Destinos:</strong>
+            <ul>
+                @foreach (var destino in Model.PacoteTuristico.Destinos)
+                {
+                    <li>@destino.Nome (@destino.PaisDestino?.Nome)</li>
+                }
+            </ul>
+        </div>
+        <a asp-page="/Pacotes/Index" class="btn btn-secondary mt-auto align-self-start">Voltar</a>
+    </div>
+</div>
+

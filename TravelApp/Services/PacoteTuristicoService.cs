@@ -26,5 +26,13 @@ namespace TravelApp.Services
                 .Include(p => p.Destinos)
                 .ToListAsync();
         }
+
+        public async Task<PacoteTuristico?> GetPacoteTuristicoByIdAsync(int id)
+        {
+            return await _context.PacotesTuristicos
+                .Include(p => p.Destinos)
+                .ThenInclude(d => d.PaisDestino)
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
     }
 }
