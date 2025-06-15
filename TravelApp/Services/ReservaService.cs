@@ -28,6 +28,7 @@ public class ReservaService : IReservaService
         return await _context.Reservas
             .Include(r => r.Cliente)
             .Include(r => r.PacoteTuristico)
+            .Where(r => !r.IsDeleted)
             .ToListAsync();
     }
 
@@ -36,9 +37,9 @@ public class ReservaService : IReservaService
         return await _context.Reservas
             .Include(r => r.Cliente)
             .Include(r => r.PacoteTuristico)
+            .Where(r => !r.IsDeleted)
             .FirstOrDefaultAsync(r => r.Id == id);
     }
-
 
     public async Task<Reserva> UpdateReservaAsync(Reserva reserva)
     {
@@ -53,7 +54,7 @@ public class ReservaService : IReservaService
         var reserva = await _context.Reservas.FindAsync(id);
         if (reserva != null)
         {
-            _context.Reservas.Remove(reserva);
+            reserva.IsDeleted = true;
             await _context.SaveChangesAsync();
         }
     }
