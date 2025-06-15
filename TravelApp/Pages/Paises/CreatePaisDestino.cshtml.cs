@@ -24,7 +24,7 @@ public class CreatePaisDestinoModel : PageModel
             return Page();
         }
         await _paisDestinoService.AddPaisDestinoAsync(PaisDestino);
-        return RedirectToPage("/Cidades");
+        return RedirectToPage("/Cidades/Index");
     }
 }
 

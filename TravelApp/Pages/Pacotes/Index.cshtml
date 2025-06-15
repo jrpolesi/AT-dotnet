@@ -15,9 +15,7 @@
 
     @if (!Model.Pacotes.Any())
     {
-        <div class="alert alert-info">
-            Nenhum pacote turístico cadastrado ainda.
-        </div>
+        <partial name="_AlertMessage" model="@("Nenhum pacote turístico cadastrado ainda.")"/>
     }
     else
     {
@@ -43,7 +41,12 @@
                         <td>@pacote.Preco.ToString("C")</td>
                         <td>@string.Join(", ", pacote.Destinos?.Select(d => d.Nome) ?? [])</td>
                         <td>
-                            <a asp-page="./PacoteTuristicoDetails" asp-route-id="@pacote.Id" class="btn btn-primary btn-sm">Detalhes</a>
+                            <a
+                                asp-page="./PacoteTuristicoDetails"
+                                asp-route-id="@pacote.Id"
+                                class="btn btn-primary btn-sm">
+                                Detalhes
+                            </a>
                         </td>
                     </tr>
                 }

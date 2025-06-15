@@ -15,9 +15,7 @@
 
     @if (!Model.Clientes.Any())
     {
-        <div class="alert alert-info">
-            Nenhum cliente cadastrado ainda.
-        </div>
+        <partial name="_AlertMessage" model="@("Nenhum cliente cadastrado ainda.")"/>
     }
     else
     {

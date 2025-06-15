@@ -7,30 +7,8 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<div>
-    <h4>Reserva</h4>
-    <hr/>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Reserva.ClienteId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Reserva.Cliente.Nome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Reserva.PacoteTuristicoId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Reserva.PacoteTuristico.Titulo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Reserva.DataReserva)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Reserva.DataReserva)
-        </dd>
-    </dl>
-</div>
+<partial name="_ReservaDetail" model="Model.Reserva"/>
+
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Reserva.Id">Editar</a> |
     <a asp-page="./Index">Voltar</a>

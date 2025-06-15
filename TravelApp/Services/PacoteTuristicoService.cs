@@ -40,7 +40,7 @@ namespace TravelApp.Services
             return await _context.PacotesTuristicos
                 .Include(p => p.Destinos)
                 .Where(p => p.DataInicio > DateTime.Now)
-                .Where(p => _context.Reservas.Count(r => r.PacoteTuristicoId == p.Id) < p.CapacidadeMaxima)
+                .Where(p => _context.Reservas.Count(r => !r.IsDeleted && r.PacoteTuristicoId == p.Id) < p.CapacidadeMaxima)
                 .ToListAsync();
         }
     }

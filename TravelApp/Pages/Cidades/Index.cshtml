@@ -15,9 +15,7 @@
 
     @if (!Model.CidadesDestino.Any())
     {
-        <div class="alert alert-info">
-            Nenhuma cidade cadastrada ainda.
-        </div>
+        <partial name="_AlertMessage" model="@("Nenhuma cidade cadastrada ainda.")"/>
     }
     else
     {

@@ -64,13 +64,23 @@ public class ReservaService : IReservaService
         return await _context.Reservas
             .AnyAsync(r => r.ClienteId == reserva.ClienteId &&
                            r.PacoteTuristicoId == reserva.PacoteTuristicoId &&
-                           r.DataReserva.Date == reserva.DataReserva.Date);
+                           r.DataReserva.Date == reserva.DataReserva.Date &&
+                           r.Id != reserva.Id
+            );
     }
 
     private async Task<bool> IsPackageFullAsync(Reserva reserva)
     {
-        var availablePacotes = await _pacoteTuristicoService.GetAvailablePacotesTuristicoAsync();
+        var existingReserva = await _context.Reservas
+            .AsNoTracking()
+            .FirstOrDefaultAsync(r => r.Id == reserva.Id && r.PacoteTuristicoId == reserva.PacoteTuristicoId);
 
+        if (existingReserva?.PacoteTuristicoId == reserva.PacoteTuristicoId)
+        {
+            return false;
+        }
+
+        var availablePacotes = await _pacoteTuristicoService.GetAvailablePacotesTuristicoAsync();
         var isAvailable = availablePacotes.Any(p => p.Id == reserva.PacoteTuristicoId);
         return !isAvailable;
     }

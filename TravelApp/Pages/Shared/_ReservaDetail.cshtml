@@ -1,0 +1,26 @@
+@model TravelApp.Models.Reserva
+
+<div>
+    <h4>Reserva</h4>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClienteId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cliente.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PacoteTuristicoId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PacoteTuristico.Titulo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataReserva)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataReserva)
+        </dd>
+    </dl>
+</div>

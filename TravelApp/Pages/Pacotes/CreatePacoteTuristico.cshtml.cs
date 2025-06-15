@@ -17,7 +17,7 @@ public class CreatePacoteTuristicoModel : PageModel
     [BindProperty]
     public PacoteTuristico PacoteTuristico { get; set; } = new PacoteTuristico
     {
-        DataInicio = DateTime.Now,
+        DataInicio = DateTime.Now.AddDays(1),
     };
 
     [BindProperty]
