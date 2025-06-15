@@ -7,16 +7,34 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.5" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.6">
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Pages\Reservas\" />
       <Folder Include="wwwroot\files\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Pages\Reservas\Index.cshtml" />
+      <Content Remove="Pages\Reservas\Details.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Pages\Reservas\Edit.cshtml.cs" />
+      <Compile Remove="Pages\Reservas\Details.cshtml.cs" />
+      <Compile Remove="Pages\Reservas\Create.cshtml.cs" />
     </ItemGroup>
 
 </Project>
