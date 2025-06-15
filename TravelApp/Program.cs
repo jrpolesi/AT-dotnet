@@ -18,6 +18,7 @@ public class Program
         builder.Services.AddScoped<ICidadeDestinoService, CidadeDestinoService>();
         builder.Services.AddScoped<IPaisDestinoService, PaisDestinoService>();
         builder.Services.AddScoped<IPacoteTuristicoService, PacoteTuristicoService>();
+        builder.Services.AddScoped<IReservaService, ReservaService>();
 
         builder.Services.AddRazorPages();
 
@@ -37,6 +38,11 @@ public class Program
         app.UseRouting();
 
         app.UseAuthorization();
+
+        app.MapGet("/", context => {
+            context.Response.Redirect("/Reservas/Index");
+            return Task.CompletedTask;
+        });
 
         app.MapRazorPages();
 
