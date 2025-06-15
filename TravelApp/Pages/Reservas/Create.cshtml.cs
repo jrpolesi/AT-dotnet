@@ -1,46 +1,64 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using TravelApp.Data;
 using TravelApp.Models;
+using TravelApp.Services;
 
-namespace TravelApp.Pages.Reservas
+namespace TravelApp.Pages.Reservas;
+
+public class CreateModel : PageModel
 {
-    public class CreateModel : PageModel
+    private readonly IReservaService _reservaService;
+    private readonly IPacoteTuristicoService _pacoteTuristicoService;
+    private readonly IClienteService _clienteService;
+
+    public CreateModel(
+        IReservaService reservaService,
+        IPacoteTuristicoService pacoteTuristicoService,
+        IClienteService clienteService)
     {
-        private readonly TravelApp.Data.TravelAppContext _context;
+        _reservaService = reservaService;
+        _pacoteTuristicoService = pacoteTuristicoService;
+        _clienteService = clienteService;
+    }
 
-        public CreateModel(TravelApp.Data.TravelAppContext context)
-        {
-            _context = context;
-        }
+    [BindProperty] public Reserva Reserva { get; set; } = new Reserva { DataReserva = DateTime.Today };
 
-        public IActionResult OnGet()
+    public async Task OnGetAsync()
+    {
+        var pacotes = await _pacoteTuristicoService.GetAvailablePacotesTuristicoAsync();
+        ViewData["PacoteTuristicoId"] = pacotes.Select(p => new SelectListItem
         {
-        ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Email");
-        ViewData["PacoteTuristicoId"] = new SelectList(_context.PacotesTuristicos, "Id", "Titulo");
+            Value = p.Id.ToString(),
+            Text = p.Titulo + " - " + p.DataInicio.ToString("dd/MM/yyyy")
+        }).ToList();
+
+        var clientes = await _clienteService.GetAllClientesAsync();
+        ViewData["ClienteId"] = clientes.Select(c => new SelectListItem
+        {
+            Value = c.Id.ToString(),
+            Text = c.Nome
+        }).ToList();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+        {
+            await OnGetAsync();
             return Page();
         }
 
-        [BindProperty]
-        public Reserva Reserva { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        try
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Reservas.Add(Reserva);
-            await _context.SaveChangesAsync();
-
+            await _reservaService.AddReservaAsync(Reserva);
             return RedirectToPage("./Index");
+        }
+        catch (InvalidOperationException ex)
+        {
+            ModelState.AddModelError("", ex.Message);
+            await OnGetAsync();
+            return Page();
         }
     }
 }

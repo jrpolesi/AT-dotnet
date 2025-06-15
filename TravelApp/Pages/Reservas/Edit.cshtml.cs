@@ -1,79 +1,79 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using TravelApp.Data;
 using TravelApp.Models;
+using TravelApp.Services;
 
-namespace TravelApp.Pages.Reservas
+namespace TravelApp.Pages.Reservas;
+
+public class EditModel : PageModel
 {
-    public class EditModel : PageModel
-    {
-        private readonly TravelApp.Data.TravelAppContext _context;
+    private readonly IReservaService _reservaService;
+    private readonly IPacoteTuristicoService _pacoteTuristicoService;
+    private readonly IClienteService _clienteService;
 
-        public EditModel(TravelApp.Data.TravelAppContext context)
+    public EditModel(
+        IReservaService reservaService,
+        IPacoteTuristicoService pacoteTuristicoService,
+        IClienteService clienteService)
+    {
+        _reservaService = reservaService;
+        _pacoteTuristicoService = pacoteTuristicoService;
+        _clienteService = clienteService;
+    }
+
+    [BindProperty] public Reserva Reserva { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        [BindProperty]
-        public Reserva Reserva { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        var reserva = await _reservaService.GetReservaByIdAsync(id.Value);
+        if (reserva == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
 
-            var reserva =  await _context.Reservas.FirstOrDefaultAsync(m => m.Id == id);
-            if (reserva == null)
-            {
-                return NotFound();
-            }
-            Reserva = reserva;
-           ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Email");
-           ViewData["PacoteTuristicoId"] = new SelectList(_context.PacotesTuristicos, "Id", "Titulo");
+        Reserva = reserva;
+
+        var pacotes = await _pacoteTuristicoService.GetAvailablePacotesTuristicoAsync();
+        ViewData["PacoteTuristicoId"] = pacotes.Select(p => new SelectListItem
+        {
+            Value = p.Id.ToString(),
+            Text = p.Titulo + " - " + p.DataInicio.ToString("dd/MM/yyyy")
+        }).ToList();
+
+        var clientes = await _clienteService.GetAllClientesAsync();
+        ViewData["ClienteId"] = clientes.Select(c => new SelectListItem
+        {
+            Value = c.Id.ToString(),
+            Text = c.Nome
+        }).ToList();
+
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+        {
+            await OnGetAsync(Reserva.Id);
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        try
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(Reserva).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReservaExists(Reserva.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            await _reservaService.UpdateReservaAsync(Reserva);
             return RedirectToPage("./Index");
         }
-
-        private bool ReservaExists(int id)
+        catch (InvalidOperationException ex)
         {
-            return _context.Reservas.Any(e => e.Id == id);
+            ModelState.AddModelError("", ex.Message);
+            await OnGetAsync(Reserva.Id);
+            return Page();
         }
     }
 }

@@ -1,22 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using TravelApp.Data;
 using TravelApp.Models;
+using TravelApp.Services;
 
 namespace TravelApp.Pages.Reservas
 {
     public class DetailsModel : PageModel
     {
-        private readonly TravelApp.Data.TravelAppContext _context;
+        private readonly IReservaService _reservaService;
 
-        public DetailsModel(TravelApp.Data.TravelAppContext context)
+        public DetailsModel(IReservaService reservaService)
         {
-            _context = context;
+            _reservaService = reservaService;
         }
 
         public Reserva Reserva { get; set; } = default!;
@@ -28,12 +23,11 @@ namespace TravelApp.Pages.Reservas
                 return NotFound();
             }
 
-            var reserva = await _context.Reservas.FirstOrDefaultAsync(m => m.Id == id);
+            var reserva = await _reservaService.GetReservaByIdAsync(id.Value);
 
             if (reserva is not null)
             {
                 Reserva = reserva;
-
                 return Page();
             }
 

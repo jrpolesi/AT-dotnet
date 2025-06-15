@@ -14,11 +14,16 @@ public class CreatePacoteTuristicoModel : PageModel
     private readonly ICidadeDestinoService _cidadeDestinoService;
     private readonly IPacoteTuristicoService _pacoteTuristicoService;
 
-    [BindProperty] public PacoteTuristico PacoteTuristico { get; set; } = new();
-    
+    [BindProperty]
+    public PacoteTuristico PacoteTuristico { get; set; } = new PacoteTuristico
+    {
+        DataInicio = DateTime.Now,
+    };
+
     [BindProperty]
     [Required(ErrorMessage = "É necessário selecionar pelo menos um destino")]
     public List<int> SelectedDestinos { get; set; } = new();
+
     public MultiSelectList CidadesDestino { get; set; }
 
     public CreatePacoteTuristicoModel(

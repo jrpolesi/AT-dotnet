@@ -1,31 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using TravelApp.Data;
 using TravelApp.Models;
+using TravelApp.Services;
 
 namespace TravelApp.Pages.Reservas
 {
     public class IndexModel : PageModel
     {
-        private readonly TravelApp.Data.TravelAppContext _context;
+        private readonly IReservaService _reservaService;
 
-        public IndexModel(TravelApp.Data.TravelAppContext context)
+        public IndexModel(IReservaService reservaService)
         {
-            _context = context;
+            _reservaService = reservaService;
         }
 
-        public IList<Reserva> Reserva { get;set; } = default!;
+        public IList<Reserva> Reservas { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Reserva = await _context.Reservas
-                .Include(r => r.Cliente)
-                .Include(r => r.PacoteTuristico).ToListAsync();
+            var reservas = await _reservaService.GetAllReservasAsync();
+            Reservas = reservas.ToList();
         }
     }
 }

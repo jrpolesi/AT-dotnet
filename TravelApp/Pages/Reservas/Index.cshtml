@@ -2,34 +2,35 @@
 @model TravelApp.Pages.Reservas.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Reservas";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Nova Reserva</a>
 </p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Reserva[0].Cliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reserva[0].PacoteTuristico)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reserva[0].DataReserva)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Reservas[0].ClienteId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reservas[0].PacoteTuristicoId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reservas[0].DataReserva)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Reserva) {
+    @foreach (var item in Model.Reservas)
+    {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Cliente.Email)
+                @Html.DisplayFor(modelItem => item.Cliente.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PacoteTuristico.Titulo)
@@ -38,11 +39,11 @@
                 @Html.DisplayFor(modelItem => item.DataReserva)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Ver</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Remover</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

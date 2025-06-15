@@ -1,26 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using TravelApp.Data;
 using TravelApp.Models;
+using TravelApp.Services;
 
 namespace TravelApp.Pages.Reservas
 {
     public class DeleteModel : PageModel
     {
-        private readonly TravelApp.Data.TravelAppContext _context;
+        private readonly IReservaService _reservaService;
 
-        public DeleteModel(TravelApp.Data.TravelAppContext context)
+        public DeleteModel(IReservaService reservaService)
         {
-            _context = context;
+            _reservaService = reservaService;
         }
 
-        [BindProperty]
-        public Reserva Reserva { get; set; } = default!;
+        [BindProperty] public Reserva Reserva { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,12 +23,11 @@ namespace TravelApp.Pages.Reservas
                 return NotFound();
             }
 
-            var reserva = await _context.Reservas.FirstOrDefaultAsync(m => m.Id == id);
+            var reserva = await _reservaService.GetReservaByIdAsync(id.Value);
 
             if (reserva is not null)
             {
                 Reserva = reserva;
-
                 return Page();
             }
 
@@ -48,14 +41,7 @@ namespace TravelApp.Pages.Reservas
                 return NotFound();
             }
 
-            var reserva = await _context.Reservas.FindAsync(id);
-            if (reserva != null)
-            {
-                Reserva = reserva;
-                _context.Reservas.Remove(Reserva);
-                await _context.SaveChangesAsync();
-            }
-
+            await _reservaService.DeleteReservaAsync(id.Value);
             return RedirectToPage("./Index");
         }
     }

@@ -34,5 +34,14 @@ namespace TravelApp.Services
                 .ThenInclude(d => d.PaisDestino)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
+
+        public async Task<IEnumerable<PacoteTuristico>> GetAvailablePacotesTuristicoAsync()
+        {
+            return await _context.PacotesTuristicos
+                .Include(p => p.Destinos)
+                .Where(p => p.DataInicio > DateTime.Now)
+                .Where(p => _context.Reservas.Count(r => r.PacoteTuristicoId == p.Id) < p.CapacidadeMaxima)
+                .ToListAsync();
+        }
     }
 }
