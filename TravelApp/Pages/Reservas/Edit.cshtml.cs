@@ -40,7 +40,10 @@ public class EditModel : PageModel
         Reserva = reserva;
 
         IEnumerable<PacoteTuristico?> pacotes = await _pacoteTuristicoService.GetAvailablePacotesTuristicoAsync();
-        pacotes = pacotes.Append(reserva.PacoteTuristico);
+        if (!pacotes.Any(p => p.Id == reserva.PacoteTuristico?.Id))
+        {
+            pacotes = pacotes.Append(reserva.PacoteTuristico);
+        }
 
         ViewData["PacoteTuristicoId"] = pacotes.Select(p => new SelectListItem
         {
