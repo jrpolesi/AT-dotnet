@@ -97,7 +97,7 @@ public class ReservaService : IReservaService
     {
         if (await HasDuplicateReservationAsync(reserva))
         {
-            throw new InvalidOperationException("Já existe uma reserva para este cliente neste pacote e data.");
+            throw new InvalidOperationException("Já existe uma reserva para este cliente neste pacote túristico e data.");
         }
 
         if (!await IsValidPackageDateAsync(reserva))
@@ -107,7 +107,7 @@ public class ReservaService : IReservaService
 
         if (await IsPackageFullAsync(reserva))
         {
-            throw new InvalidOperationException("O pacote turístico já atingiu sua capacidade máxima para esta data.");
+            throw new InvalidOperationException("O pacote turístico já está lotado.");
         }
     }
 }
